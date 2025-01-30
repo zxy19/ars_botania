@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "studio.fantasyit.ars_botania.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ars_botania.refmap.json",
+  "mixins": [
+    "ArsGuiMana",
+    "ArsManaCap",
+    "ArsRelayBlock",
+    "ArsRelaySplitterBlock",
+    "ArsRelaySplitterTile",
+    "ArsRelayTile",
+    "ArsSourceJar",
+    "ArsSourceUtilTake",
+    "BotManaPool"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

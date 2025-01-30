@@ -1,0 +1,56 @@
+package studio.fantasyit.ars_botania;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
+// Demonstrates how to use Forge's config APIs
+@Mod.EventBusSubscriber(modid = ArsBotania.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class Config
+{
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+
+    private static final ForgeConfigSpec.ConfigValue<Double> MANA_CONVERT = BUILDER
+            .comment("One source mana(Ars) to X Mana(Bot)")
+            .define("mana_convert", 15.0);
+
+    private static final ForgeConfigSpec.BooleanValue PLAYER_MANA_CONVERT_ENABLE = BUILDER
+            .comment("Enable player mana convert")
+            .define("player_mana_convert.enable", false);
+    private static final ForgeConfigSpec.BooleanValue PLAYER_MANA_RECOVERY_CHARGE_ITEM = BUILDER
+            .comment("Allow charging items using player's mana recovery")
+            .define("player_mana_convert.charge", false);
+    private static final ForgeConfigSpec.ConfigValue<Double> PLAYER_MANA_CONVERT_A2B = BUILDER
+            .comment("One player mana(Ars) to X Mana(Bot)")
+            .define("player_mana_convert.a2b", 4.0);
+    private static final ForgeConfigSpec.ConfigValue<Double> PLAYER_MANA_CONVERT_B2A = BUILDER
+            .comment("One Mana(Bot) to X player mana(Ars)")
+            .define("player_mana_convert.b2a", 0.006);
+    static final ForgeConfigSpec SPEC = BUILDER.build();
+
+
+    public static double manaConvert;
+    public static double playerManaConvertA2B;
+    public static double playerManaConvertB2A;
+    public static boolean playerManaConvertEnable;
+    public static boolean playerManaRecoveryChargeItem;
+    @SubscribeEvent
+    static void onLoad(final ModConfigEvent event)
+    {
+        manaConvert = MANA_CONVERT.get();
+        playerManaConvertA2B = PLAYER_MANA_CONVERT_A2B.get();
+        playerManaConvertB2A = PLAYER_MANA_CONVERT_B2A.get();
+        playerManaConvertEnable = PLAYER_MANA_CONVERT_ENABLE.get();
+        playerManaRecoveryChargeItem = PLAYER_MANA_RECOVERY_CHARGE_ITEM.get();
+    }
+}
