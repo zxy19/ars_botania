@@ -1,4 +1,6 @@
 # Ars Botania
+For English users, please see [English](readme.md)
+
 ![cover.png](image%2Fcover.png)
 
 植物魔法和新生魔艺的魔力互通

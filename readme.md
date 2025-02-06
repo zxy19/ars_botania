@@ -1,4 +1,6 @@
 # Ars Botania
+中文用户可以访问[简体中文](readme_zh.md)
+
 ![cover.png](image%2Fcover.png)
 
 Mana interoperability between Botania and Ars Nouveau
