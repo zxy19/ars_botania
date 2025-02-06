@@ -31,11 +31,14 @@ public class Config
             .comment("Allow charging items using player's mana recovery")
             .define("player_mana_convert.charge", false);
     private static final ForgeConfigSpec.ConfigValue<Double> PLAYER_MANA_CONVERT_A2B = BUILDER
-            .comment("One player mana(Ars) to X Mana(Bot)")
+            .comment("One player mana(Ars) to X Mana(Bot) [Referred when receiving/extracting ars-nouveau mana]")
             .define("player_mana_convert.a2b", 4.0);
     private static final ForgeConfigSpec.ConfigValue<Double> PLAYER_MANA_CONVERT_B2A = BUILDER
-            .comment("One Mana(Bot) to X player mana(Ars)")
+            .comment("One Mana(Bot) to X player mana(Ars) [Referred when receiving/extracting botania mana]")
             .define("player_mana_convert.b2a", 0.006);
+    private static final ForgeConfigSpec.ConfigValue<Integer> MAX_RATE = BUILDER
+            .comment("Max rate of mana transfer")
+            .define("max_rate", 1000);
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
 
@@ -44,6 +47,8 @@ public class Config
     public static double playerManaConvertB2A;
     public static boolean playerManaConvertEnable;
     public static boolean playerManaRecoveryChargeItem;
+    public static int maxRate;
+
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
@@ -52,5 +57,6 @@ public class Config
         playerManaConvertB2A = PLAYER_MANA_CONVERT_B2A.get();
         playerManaConvertEnable = PLAYER_MANA_CONVERT_ENABLE.get();
         playerManaRecoveryChargeItem = PLAYER_MANA_RECOVERY_CHARGE_ITEM.get();
+        maxRate = MAX_RATE.get();
     }
 }

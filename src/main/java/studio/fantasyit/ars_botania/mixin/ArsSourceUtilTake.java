@@ -28,7 +28,6 @@ public class ArsSourceUtilTake {
                     }
                 }
             }
-
         });
         cir.setReturnValue(list);
     }

@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "ars_botania.refmap.json",
   "mixins": [
-    "ArsGuiMana",
+    "AENetworkStorageTypeMixin",
     "ArsManaCap",
     "ArsRelayBlock",
     "ArsRelaySplitterBlock",
@@ -13,7 +13,9 @@
     "ArsRelayTile",
     "ArsSourceJar",
     "ArsSourceUtilTake",
-    "BotManaPool"
+    "BotAccumulatorInjector",
+    "BotManaPool",
+    "BotIManaRecvMixin"
   ],
   "client": [
   ],

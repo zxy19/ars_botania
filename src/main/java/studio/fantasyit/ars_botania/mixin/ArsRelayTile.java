@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import studio.fantasyit.ars_botania.api.ICustomTick;
 import studio.fantasyit.ars_botania.api.IExtISourceTile;
+import vazkii.botania.api.mana.ManaReceiver;
 
 @Mixin(value = com.hollingsworth.arsnouveau.common.block.tile.RelayTile.class, remap = false)
 public abstract class ArsRelayTile extends AbstractSourceMachine implements ITickable, ICustomTick {
