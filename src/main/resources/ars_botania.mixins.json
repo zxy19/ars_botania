@@ -4,6 +4,7 @@
   "package": "studio.fantasyit.ars_botania.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "ars_botania.refmap.json",
+  "plugin": "studio.fantasyit.ars_botania.mixin.MixinLoaderPlugin",
   "mixins": [
     "AENetworkStorageTypeMixin",
     "ArsManaCap",

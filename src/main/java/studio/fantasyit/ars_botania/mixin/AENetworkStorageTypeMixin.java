@@ -7,6 +7,7 @@ import appeng.api.stacks.AEKey;
 import appeng.me.storage.NetworkStorage;
 import com.llamalad7.mixinextras.sugar.Local;
 import gripe._90.arseng.me.key.SourceKey;
+import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,12 +28,15 @@ public abstract class AENetworkStorageTypeMixin {
     @Shadow
     public abstract long extract(AEKey what, long amount, Actionable mode, IActionSource source);
 
-    @Shadow protected abstract void surface(Actionable type);
+    @Shadow
+    protected abstract void surface(Actionable type);
 
-    @Shadow protected abstract boolean diveList(Actionable type);
+    @Shadow
+    protected abstract boolean diveList(Actionable type);
 
     @ModifyVariable(at = @At(value = "INVOKE", target = "Lappeng/me/storage/NetworkStorage;surface(Lappeng/api/config/Actionable;)V", shift = At.Shift.BEFORE), method = "insert", name = "remaining")
     public long insert(long remaining, @Local(argsOnly = true) AEKey what, @Local(argsOnly = true) Actionable type, @Local(argsOnly = true) IActionSource src) {
+
         if (remaining > 0) {
             if (KEY_DEP.get() == null) {
                 KEY_DEP.set(new java.util.ArrayDeque<>());
