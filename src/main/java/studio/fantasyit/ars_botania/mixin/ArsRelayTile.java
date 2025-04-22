@@ -21,8 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import studio.fantasyit.ars_botania.api.ICustomTick;
-import studio.fantasyit.ars_botania.api.IExtISourceTile;
-import vazkii.botania.api.mana.ManaReceiver;
+import studio.fantasyit.ars_botania.api.IReceiveOrGiveSource;
 
 @Mixin(value = com.hollingsworth.arsnouveau.common.block.tile.RelayTile.class, remap = false)
 public abstract class ArsRelayTile extends AbstractSourceMachine implements ITickable, ICustomTick {
@@ -49,7 +48,7 @@ public abstract class ArsRelayTile extends AbstractSourceMachine implements ITic
     @Inject(at = @At("RETURN"), method = "setSendTo", cancellable = true)
     public void ars_botania$setSendTo(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (!cir.getReturnValue()) {
-            if (this.level != null && !(BlockUtil.distanceFrom(pos, this.worldPosition) > (double) this.getMaxDistance()) && !pos.equals(this.getBlockPos()) && this.level.getBlockEntity(pos) instanceof IExtISourceTile) {
+            if (this.level != null && !(BlockUtil.distanceFrom(pos, this.worldPosition) > (double) this.getMaxDistance()) && !pos.equals(this.getBlockPos()) && this.level.getBlockEntity(pos) instanceof IReceiveOrGiveSource) {
                 this.toPos = pos;
                 this.updateBlock();
                 cir.setReturnValue(true);
@@ -59,7 +58,7 @@ public abstract class ArsRelayTile extends AbstractSourceMachine implements ITic
 
     @Inject(at = @At("RETURN"), method = "onFinishedConnectionLast")
     public void ars_botania$onFinishedConnectionLast(BlockPos storedPos, LivingEntity storedEntity, Player playerEntity, CallbackInfo ci) {
-        if (this.level != null && storedPos != null && !storedPos.equals(this.getBlockPos()) && !(this.level.getBlockEntity(storedPos) instanceof com.hollingsworth.arsnouveau.common.block.tile.RelayTile) && this.level.getBlockEntity(storedPos) instanceof IExtISourceTile) {
+        if (this.level != null && storedPos != null && !storedPos.equals(this.getBlockPos()) && !(this.level.getBlockEntity(storedPos) instanceof com.hollingsworth.arsnouveau.common.block.tile.RelayTile) && this.level.getBlockEntity(storedPos) instanceof IReceiveOrGiveSource) {
             if (this.setTakeFrom(storedPos.immutable())) {
                 PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.take", DominionWand.getPosString(storedPos)));
             } else {
@@ -70,7 +69,7 @@ public abstract class ArsRelayTile extends AbstractSourceMachine implements ITic
 
     @Inject(at = @At("RETURN"), method = "onFinishedConnectionFirst", cancellable = true)
     public void ars_botania$onFinishedConnectionFirst(BlockPos storedPos, LivingEntity storedEntity, Player playerEntity, CallbackInfo ci) {
-        if (storedPos != null && !this.level.isClientSide && !storedPos.equals(this.getBlockPos()) && this.level.getBlockEntity(storedPos) instanceof IExtISourceTile) {
+        if (storedPos != null && !this.level.isClientSide && !storedPos.equals(this.getBlockPos()) && this.level.getBlockEntity(storedPos) instanceof IReceiveOrGiveSource) {
             if (this.setSendTo(storedPos.immutable())) {
                 PortUtil.sendMessage(playerEntity, Component.translatable("ars_nouveau.connections.send", new Object[]{DominionWand.getPosString(storedPos)}));
                 ParticleUtil.beam(storedPos, this.worldPosition, this.level);

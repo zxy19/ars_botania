@@ -11,13 +11,13 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import studio.fantasyit.ars_botania.Config;
-import studio.fantasyit.ars_botania.api.IExtSourceJar;
+import studio.fantasyit.ars_botania.api.IReceiveOrGiveMana;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 
 import java.util.Optional;
 
 @Mixin(value = AbstractSourceMachine.class,remap = false)
-public abstract class ArsSourceJar extends ModdedTile implements IExtSourceJar {
+public abstract class ArsReceiveOrGiveManaPool extends ModdedTile implements IReceiveOrGiveMana {
 
     @Shadow public abstract int getMaxSource();
 
@@ -38,7 +38,7 @@ public abstract class ArsSourceJar extends ModdedTile implements IExtSourceJar {
             this.accumulator = new DoubleAccumulator(Config.manaConvert);
         return this.accumulator;
     }
-    public ArsSourceJar(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+    public ArsReceiveOrGiveManaPool(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
     }
 

@@ -7,17 +7,21 @@
   "mixins": [
     "AENetworkStorageTypeMixin",
     "ArsManaCap",
+    "ArsReceiveOrGiveManaPool",
     "ArsRelayBlock",
+    "ArsRelayCollectorTile",
+    "ArsRelayDepositTile",
     "ArsRelaySplitterBlock",
     "ArsRelaySplitterTile",
     "ArsRelayTile",
-    "ArsSourceJar",
     "ArsSourceUtilTake",
     "BotAccumulatorInjector",
-    "BotManaPool",
-    "BotIManaRecvMixin"
+    "BotIManaRecvMixinReceiveOrGive",
+    "BotManaPool"
   ],
   "client": [
+    "MythicBotanyBeMana",
+    "MythicBotanyInfuser"
   ],
   "injectors": {
     "defaultRequire": 1

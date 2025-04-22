@@ -4,11 +4,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import studio.fantasyit.ars_botania.Config;
 import studio.fantasyit.ars_botania.api.IAccumulatorGetter;
-import studio.fantasyit.ars_botania.api.IExtISourceTile;
+import studio.fantasyit.ars_botania.api.IReceiveOrGiveSource;
 import vazkii.botania.api.mana.ManaReceiver;
 
 @Mixin(ManaReceiver.class)
-public interface BotIManaRecvMixin extends IExtISourceTile, IAccumulatorGetter {
+public interface BotIManaRecvMixinReceiveOrGive extends IReceiveOrGiveSource, IAccumulatorGetter {
     @Shadow
     boolean isFull();
 

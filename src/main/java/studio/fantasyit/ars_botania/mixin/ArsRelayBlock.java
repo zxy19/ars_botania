@@ -1,7 +1,10 @@
 package studio.fantasyit.ars_botania.mixin;
 
+import com.hollingsworth.arsnouveau.common.block.ITickable;
 import com.hollingsworth.arsnouveau.common.block.ITickableBlock;
 import com.hollingsworth.arsnouveau.common.block.Relay;
+import com.hollingsworth.arsnouveau.common.block.tile.RelayCollectorTile;
+import com.hollingsworth.arsnouveau.common.block.tile.RelayDepositTile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -17,7 +20,9 @@ public abstract class ArsRelayBlock implements ITickableBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return ITickableBlock.createTickerHelper(type, type, (l, pos, s, te) -> {
-            if(te instanceof ICustomTick ict){
+            if (te instanceof RelayDepositTile || te instanceof RelayCollectorTile)
+                ((ITickable) te).tick(l, s, pos);
+            if (te instanceof ICustomTick ict) {
                 ict.ars_botania$customTick();
             }
         });

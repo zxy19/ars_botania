@@ -4,12 +4,12 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import studio.fantasyit.ars_botania.Config;
-import studio.fantasyit.ars_botania.api.IExtISourceTile;
+import studio.fantasyit.ars_botania.api.IReceiveOrGiveSource;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 import vazkii.botania.common.block.block_entity.mana.ManaPoolBlockEntity;
 
 @Mixin(value = ManaPoolBlockEntity.class,remap = false)
-public abstract class BotManaPool implements IExtISourceTile {
+public abstract class BotManaPool implements IReceiveOrGiveSource {
     @Nullable
     public DoubleAccumulator accumulator;
 
