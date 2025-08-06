@@ -16,13 +16,10 @@
     "ArsRelaySplitterTile",
     "ArsRelayTile",
     "ArsSourceUtilTake",
-    "BotAccumulatorInjector",
     "BotIManaRecvMixinReceiveOrGive",
     "BotManaPool"
   ],
   "client": [
-    "MythicBotanyBeMana",
-    "MythicBotanyInfuser"
   ],
   "injectors": {
     "defaultRequire": 1

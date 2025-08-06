@@ -3,12 +3,12 @@ package studio.fantasyit.ars_botania.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import studio.fantasyit.ars_botania.Config;
-import studio.fantasyit.ars_botania.api.IAccumulatorGetter;
 import studio.fantasyit.ars_botania.api.IReceiveOrGiveSource;
+import studio.fantasyit.ars_botania.data.AccumulatorGetter;
 import vazkii.botania.api.mana.ManaReceiver;
 
 @Mixin(ManaReceiver.class)
-public interface BotIManaRecvMixinReceiveOrGive extends IReceiveOrGiveSource, IAccumulatorGetter {
+public interface BotIManaRecvMixinReceiveOrGive extends IReceiveOrGiveSource {
     @Shadow
     boolean isFull();
 
@@ -27,7 +27,7 @@ public interface BotIManaRecvMixinReceiveOrGive extends IReceiveOrGiveSource, IA
     }
 
     default int getSource() {
-        return this.getAccumulator().inner2outer(this.getCurrentMana());
+        return AccumulatorGetter.getAccumulatorBotAuto(this).inner2outer(this.getCurrentMana());
     }
 
     default int getMaxSource() {
@@ -42,14 +42,14 @@ public interface BotIManaRecvMixinReceiveOrGive extends IReceiveOrGiveSource, IA
     }
 
     default int addSource(int var1) {
-        int i = this.getAccumulator().accumulateAndGet(var1);
+        int i = AccumulatorGetter.getAccumulatorBotAuto(this).accumulateAndGet(var1);
         this.receiveMana(i);
         return i;
     }
 
     default int removeSource(int var1){
-        int i = this.getAccumulator().takeAndGetCost(var1);
-        this.receiveMana(i);
+        int i = AccumulatorGetter.getAccumulatorBotAuto(this).takeAndGetCost(var1);
+        this.receiveMana(-i);
         return i;
     }
 }
