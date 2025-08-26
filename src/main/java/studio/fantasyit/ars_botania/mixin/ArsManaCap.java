@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import studio.fantasyit.ars_botania.ArsBotania;
 import studio.fantasyit.ars_botania.Config;
 import studio.fantasyit.ars_botania.api.IArsManaCap;
+import studio.fantasyit.ars_botania.data.ConvertEnums;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 import vazkii.botania.api.mana.ManaItem;
 import vazkii.botania.api.mana.ManaItemHandler;
@@ -30,7 +31,7 @@ public abstract class ArsManaCap implements IArsManaCap {
 
     public DoubleAccumulator getAccumulator() {
         if (this.accumulator == null)
-            this.accumulator = new DoubleAccumulator(Config.playerManaConvertB2A);
+            this.accumulator = new DoubleAccumulator(ConvertEnums.getWhenPlayerCoseBotaniaManaAndWillBeConvertedToPlayerSource());
         return this.accumulator;
     }
 
@@ -39,7 +40,7 @@ public abstract class ArsManaCap implements IArsManaCap {
 
     public DoubleAccumulator getStoreAccumulator() {
         if (this.storeAccumulator == null)
-            this.storeAccumulator = new DoubleAccumulator(1 / Config.playerManaConvertB2A);
+            this.storeAccumulator = new DoubleAccumulator(ConvertEnums.getWhenPlayerUsePlayerSourceToFillInMana());
         return this.storeAccumulator;
     }
 
@@ -128,7 +129,7 @@ public abstract class ArsManaCap implements IArsManaCap {
             if (Config.playerManaRecoveryChargeItem) {
                 double extraMana = manaToAdd - (this.maxMana - this.mana);
                 int realMana = getStoreAccumulator().accumulateAndGet((int) extraMana);
-                ManaItemHandler.instance().dispatchManaExact(
+                ManaItemHandler.instance().dispatchMana(
                         ArsBotania.FAKE_MANA_ITEM.get().getDefaultInstance(),
                         ars_botania$player,
                         realMana,
@@ -149,7 +150,7 @@ public abstract class ArsManaCap implements IArsManaCap {
             double extraMana = manaToRemove - this.mana;
             int realMana = getAccumulator().takeAndGetCost(extraMana);
 
-            ManaItemHandler.instance().requestManaExact(
+            ManaItemHandler.instance().requestMana(
                     ArsBotania.FAKE_MANA_ITEM.get().getDefaultInstance(),
                     ars_botania$player,
                     realMana,

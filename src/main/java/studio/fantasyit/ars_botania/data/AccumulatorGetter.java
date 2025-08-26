@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AccumulatorGetter {
     protected static ConcurrentHashMap<BlockPos, DoubleAccumulator> accumulatorMap = new ConcurrentHashMap<>();
-    protected static DoubleAccumulator commonBot = new DoubleAccumulator(1 / Config.manaConvert);
+    protected static DoubleAccumulator commonBot = new DoubleAccumulator(ConvertEnums.getWhenSourceWasPutIntoOrTakeOutFromManaContainer());
 
     public static DoubleAccumulator getAccumulatorBotAuto(Object target) {
         if (target instanceof BlockEntity be)
@@ -20,6 +20,6 @@ public class AccumulatorGetter {
     }
 
     public static DoubleAccumulator getAccumulatorBot(BlockPos pos) {
-        return accumulatorMap.computeIfAbsent(pos, (p) -> new DoubleAccumulator(1 / Config.manaConvert));
+        return accumulatorMap.computeIfAbsent(pos, (p) -> new DoubleAccumulator(ConvertEnums.getWhenSourceWasPutIntoOrTakeOutFromManaContainer()));
     }
 }

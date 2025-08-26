@@ -3,8 +3,8 @@ package studio.fantasyit.ars_botania.mixin;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import studio.fantasyit.ars_botania.Config;
 import studio.fantasyit.ars_botania.api.IReceiveOrGiveSource;
+import studio.fantasyit.ars_botania.data.ConvertEnums;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 import vazkii.botania.common.block.block_entity.mana.ManaPoolBlockEntity;
 
@@ -15,7 +15,7 @@ public abstract class BotManaPool implements IReceiveOrGiveSource {
 
     public DoubleAccumulator getAccumulator(){
         if (this.accumulator == null)
-            this.accumulator = new DoubleAccumulator(1/Config.manaConvert);
+            this.accumulator = new DoubleAccumulator(ConvertEnums.getWhenSourceWasPutIntoOrTakeOutFromManaContainer());
         return this.accumulator;
     }
 

@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import studio.fantasyit.ars_botania.Config;
 import studio.fantasyit.ars_botania.api.IReceiveOrGiveMana;
+import studio.fantasyit.ars_botania.data.ConvertEnums;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 
 import java.util.Optional;
@@ -35,7 +36,7 @@ public abstract class ArsReceiveOrGiveManaPool extends ModdedTile implements IRe
 
     public DoubleAccumulator getAccumulator(){
         if (this.accumulator == null)
-            this.accumulator = new DoubleAccumulator(Config.manaConvert);
+            this.accumulator = new DoubleAccumulator(ConvertEnums.getWhenManaWasPutIntoOrTakeOutFromSourceContainer());
         return this.accumulator;
     }
     public ArsReceiveOrGiveManaPool(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {

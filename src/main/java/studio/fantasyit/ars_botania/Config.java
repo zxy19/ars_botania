@@ -1,17 +1,9 @@
 package studio.fantasyit.ars_botania;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Forge's config APIs
@@ -42,8 +34,10 @@ public class Config
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
 
-    public static double manaConvert;
+    public static double manaConvertA2B;
+    //Used when required unit is Mana
     public static double playerManaConvertA2B;
+    //Used when required unit is Source
     public static double playerManaConvertB2A;
     public static boolean playerManaConvertEnable;
     public static boolean playerManaRecoveryChargeItem;
@@ -52,7 +46,7 @@ public class Config
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
-        manaConvert = MANA_CONVERT.get();
+        manaConvertA2B = MANA_CONVERT.get();
         playerManaConvertA2B = PLAYER_MANA_CONVERT_A2B.get();
         playerManaConvertB2A = PLAYER_MANA_CONVERT_B2A.get();
         playerManaConvertEnable = PLAYER_MANA_CONVERT_ENABLE.get();

@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import studio.fantasyit.ars_botania.ArsBotania;
 import studio.fantasyit.ars_botania.Config;
 import studio.fantasyit.ars_botania.api.IArsManaCap;
+import studio.fantasyit.ars_botania.data.ConvertEnums;
 import studio.fantasyit.ars_botania.utils.DoubleAccumulator;
 import vazkii.botania.api.mana.ManaItem;
 
@@ -24,7 +25,7 @@ public class FakeManaCap implements ManaItem {
 
     public DoubleAccumulator getAccumulator() {
         if (this.accumulator == null)
-            this.accumulator = new DoubleAccumulator(Config.playerManaConvertA2B);
+            this.accumulator = new DoubleAccumulator(ConvertEnums.getWhenPlayerUsePlayerSourceAndWillBeConvertedToBotaniaMana());
         return this.accumulator;
     }
 
@@ -33,7 +34,7 @@ public class FakeManaCap implements ManaItem {
 
     public DoubleAccumulator getStoreAccumulator() {
         if (this.storeAccumulator == null)
-            this.storeAccumulator = new DoubleAccumulator(1/Config.playerManaConvertB2A);
+            this.storeAccumulator = new DoubleAccumulator(ConvertEnums.getWhenPlayerReceiveBotaniaManaAndWillBeConvertedToPlayerSource());
         return this.storeAccumulator;
     }
 
