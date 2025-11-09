@@ -20,7 +20,7 @@ import java.util.Deque;
 public abstract class AENetworkStorageTypeMixin {
 
     @Unique
-    private static final ThreadLocal<Deque<AEKey>> KEY_DEP = new ThreadLocal<>();
+    private final ThreadLocal<Deque<AEKey>> KEY_DEP = new ThreadLocal<>();
 
     @Shadow
     public abstract long insert(AEKey what, long amount, Actionable type, IActionSource src);
@@ -28,13 +28,7 @@ public abstract class AENetworkStorageTypeMixin {
     @Shadow
     public abstract long extract(AEKey what, long amount, Actionable mode, IActionSource source);
 
-    @Shadow
-    protected abstract void surface(Actionable type);
-
-    @Shadow
-    protected abstract boolean diveList(Actionable type);
-
-    @ModifyVariable(at = @At(value = "INVOKE", target = "Lappeng/me/storage/NetworkStorage;surface(Lappeng/api/config/Actionable;)V", shift = At.Shift.BEFORE), method = "insert", name = "remaining")
+    @ModifyVariable(at = @At(value = "INVOKE", target = "Lappeng/api/storage/MEStorage;insert(Lappeng/api/stacks/AEKey;JLappeng/api/config/Actionable;Lappeng/api/networking/security/IActionSource;)J", shift = At.Shift.BEFORE), method = "insert", name = "remaining")
     public long insert(long remaining, @Local(argsOnly = true) AEKey what, @Local(argsOnly = true) Actionable type, @Local(argsOnly = true) IActionSource src) {
 
         if (remaining > 0) {
@@ -45,15 +39,12 @@ public abstract class AENetworkStorageTypeMixin {
                 return remaining;
             }
             KEY_DEP.get().push(what);
-            this.surface(type);
             long ret = remaining;
             if (what == ManaKey.KEY) {
                 ret = remaining - this.insert(SourceKey.KEY, remaining, type, src);
             } else if (what == SourceKey.KEY) {
                 ret = remaining - this.insert(ManaKey.KEY, remaining, type, src);
             }
-            this.diveList(type);
-
             KEY_DEP.get().pop();
             return ret;
         }
@@ -61,7 +52,7 @@ public abstract class AENetworkStorageTypeMixin {
     }
 
 
-    @ModifyVariable(at = @At(value = "INVOKE", target = "Lappeng/me/storage/NetworkStorage;surface(Lappeng/api/config/Actionable;)V", shift = At.Shift.BEFORE), method = "extract", name = "extracted")
+    @ModifyVariable(at = @At(value = "INVOKE", target = "Lappeng/api/storage/MEStorage;extract(Lappeng/api/stacks/AEKey;JLappeng/api/config/Actionable;Lappeng/api/networking/security/IActionSource;)J", shift = At.Shift.BEFORE), method = "extract", name = "extracted")
     public long extract(long extracted, @Local(argsOnly = true) long amount, @Local(argsOnly = true) AEKey what, @Local(argsOnly = true) Actionable type, @Local(argsOnly = true) IActionSource src) {
         if (amount - extracted > 0) {
             if (KEY_DEP.get() == null) {
@@ -71,14 +62,12 @@ public abstract class AENetworkStorageTypeMixin {
                 return extracted;
             }
             KEY_DEP.get().push(what);
-            this.surface(type);
             long ret = extracted;
             if (what == ManaKey.KEY) {
                 ret = extracted + this.extract(SourceKey.KEY, amount - extracted, type, src);
             } else if (what == SourceKey.KEY) {
                 ret = extracted + this.extract(ManaKey.KEY, amount - extracted, type, src);
             }
-            this.diveList(type);
             KEY_DEP.get().pop();
             return ret;
         }
